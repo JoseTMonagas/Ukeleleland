@@ -1,0 +1,65 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// Sweet Alert
+@import '~sweetalert2/src/sweetalert2.scss';
+
+// Vue-Select
+@import "vue-select/src/scss/vue-select.scss";
+
+// FontAwesome
+@import "./scss/fontawesome.scss";
+@import "./scss/solid.scss";
+@import "./scss/brands.scss";
+
+.bg-gray {
+  background-color: $gray;
+}
+
+a {
+  color: black;
+}
+
+#triggerId:hover {
+  color: $blue;
+}
+
+a:hover {
+  color: $blue;
+  text-decoration: none;
+}
+
+.fas, .fab {
+  font-size: 1.5em;
+}
+
+.card-header {
+  background-color: $gray;
+}
+
+.banner {
+  background-image: url('img/banner.jpg');
+}
+
+.ad-nav {
+  width: 100%; 
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: rgba(0,0,0,0.8);
+  transition: background-color 1s;
+
+  &:hover {
+    background-color: rgba(0,0,0,0.0);
+  }
+
+}
+
+

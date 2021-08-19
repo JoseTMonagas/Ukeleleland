@@ -1,0 +1,1 @@
+{!! setting('site.header') !!}
