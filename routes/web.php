@@ -20,6 +20,10 @@ Route::group(['prefix' => 'voyager'], function () {
     Voyager::routes();
 });
 
+Route::get("test-recibo", function() {
+    return view('webpay/exito');
+});
+
 Route::group(['prefix' => 'control', 'middleware' => ['auth', 'checkAdmin']], function() {
     Route::get('ukeprofe/solicitantes', 'TutorController@index')->name('tutor.index');
     Route::get('ukeprofe/revisar/{profile}', 'TutorController@revisar')->name('tutor.revisar');
@@ -85,13 +89,7 @@ Route::get('/dispatch-price/{commune?}', 'getDispatchPriceController')->name('di
 
 Route::group(['prefix' => 'webpay'], function () {
     Route::get('init/{sale}', 'WebpayController@init')->name('webpay.init');
-    Route::get('token', 'WebpayController@token')->name('webpay.token');
-
-    Route::get('exito', 'WebpayController@exito')->name('webpay.exito');
-    Route::get('rechazo', 'WebpayController@rechazo')->name('webpay.rechazo');
-
-    Route::post('voucher/{sale}', 'WebpayController@voucher')->name('webpay.voucher');
-    Route::post('finish/{sale}', 'WebpayController@finish')->name('webpay.finish');
+    Route::get('voucher/{sale}', 'WebpayController@voucher')->name('webpay.voucher');
 });
 
 Route::group(['prefix' => 'blog'], function () {

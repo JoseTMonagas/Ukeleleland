@@ -190,7 +190,7 @@ class SaleController extends Controller
         if ($sale->id > 0) {
             $status = [
                 "status" => "OK",
-                "redirect" => route("webpay.init", $sale),
+                "url" => route("webpay.init", $sale),
             ];
         } else {
             $status = [

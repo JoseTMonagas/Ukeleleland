@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Transbank\Webpay\Configuration;
-use Transbank\Webpay\Webpay;
+use Transbank\Webpay\WebpayPlus\Transaction;
+
 
 class WebpayController extends Controller
 {
@@ -28,45 +28,37 @@ class WebpayController extends Controller
             "sessionId" => $sale->sesion,
             "buyOrder" => $sale->id,
             "returnUrl" => route('webpay.voucher', $sale),
-            "finalUrl" => route('webpay.finish', $sale),
         ];
 
-        if (env('APP_ENV') == "local") {
-            $transaction = (new Webpay(
-                Configuration::forTestingWebpayPlusNormal())
-            )->getNormalTransaction();
-        } else {
-            $configuration = new Configuration;
-            $configuration->setEnvironment("PRODUCCION");
-            $configuration->setCommerceCode(config("webpay.commerce_code"));
-            $configuration->setPublicCert(config("webpay.public_cert"));
-            $configuration->setPrivateKey(config("webpay.private_key"));
 
-            $webpay = new Webpay($configuration);
-            
-
-            $transaction = $webpay->getNormalTransaction();
-            
-            
+        if (env('APP_ENV') != "local") {
+            \Transbank\Webpay\WebpayPlus::configureForProduction(config("webpay.commerce_code"), 'tu-api-key');
         }
 
-        if ($transaction != null && !Arr::has($transactionData, null)) {
-            $initResult = $transaction->initTransaction(
-                $transactionData["monto"],
-                $transactionData["buyOrder"],
-                $transactionData["sessionId"],
-                $transactionData["returnUrl"],
-                $transactionData["finalUrl"],
-            );
-            
 
-            $formAction = $initResult->url;
-            $tokenWs = $initResult->token;
+        if (!Arr::has($transactionData, null)) {
+            $transaction = (new Transaction)
+                         ->create(
+                             $transactionData["buyOrder"],
+                             $transactionData["sessionId"],
+                             $transactionData["monto"],
+                             $transactionData["returnUrl"]
+                         );
 
-            return view('webpay/token')->with(compact('formAction', 'tokenWs'));
+            $context = [
+                "status" => "OK",
+                "url" => $transaction->getUrl(),
+                "token" => $transaction->getToken(),
+            ];
+
+            return response()->json($context);
         }
 
-        return redirect()->route('home');
+        $context = [
+            "status" => 'ERROR'
+        ];
+
+        return response()->json($context);
 
     }
 
@@ -82,65 +74,45 @@ class WebpayController extends Controller
             return 'Error. No token recibido';
         }
 
-        $transaction = null;
-
-        if (env('APP_ENV') == "local") {
-            $transaction = (new Webpay(Configuration::forTestingWebpayPlusNormal()))->getNormalTransaction();
-        } else {
-            $configuration = new Configuration;
-            $configuration->setEnvironment("PRODUCCION");
-            $configuration->setCommerceCode(config('webpay.commerce_code'));
-            $configuration->setPublicCert(config('webpay.public_cert'));
-            $configuration->setPrivateKey(config('webpay.private_key'));
-
-            $webpay = new Webpay($configuration);
-            
-
-            $transaction = $webpay->getNormalTransaction();
+        if (env('APP_ENV') != "local") {
+            \Transbank\Webpay\WebpayPlus::configureForProduction(config("webpay.commerce_code"), 'tu-api-key');
         }
 
-        if (isset($transaction)) {
-            $tokenWs = $request->input('token_ws');
-            $result = $transaction->getTransactionResult($tokenWs);
-            $output = $result->detailOutput;
+        $transaction = (new Transaction)->commit($request->input("token_ws"));
 
-            $orden = Sale::find(intval($output->buyOrder));
+        if ($transaction->isApproved()) {
+            $cardNumber = $transaction->getCardDetail();
+            $cardNumber = $cardNumber["card_number"];
+            $result = [
+                "amount" => $transaction->getAmount(),
+                "buyOrder" => $transaction->getBuyOrder(),
+                "sessionId" => $transaction->getSessionId(),
+                "accountingDate" => $transaction->getAccountingDate(),
+                "transactionDate" => $transaction->getTransactionDate(),
+                "paymentTypeCode" => $transaction->getPaymentTypeCode(),
+                "installmentsAmount" => $transaction->getInstallmentsAmount(),
+                "installmentsNumber" => $transaction->getInstallmentsNumber(),
+                "authorizationCode" => $transaction->getAuthorizationCode(),
+                "cardNumber" => $cardNumber,
+                "balance" => $transaction->getBalance(),
+            ];
+
+            $orden = Sale::find(intval($transaction->getBuyOrder()));
             $orden->result = json_encode($result);
             $orden->save();
 
-            $formAction = $result->urlRedirection;
+            $orden->actualizarStock();
+            $orden->createTransaction();
 
-            if ($output->responseCode == 0) {
-                $orden->actualizarStock();
-                $orden->sendCreated();
-                $orden->createTransaction();
-                if (Session::has('premium') && Session::get('premium')) {
-                    $user = User::find(Auth::user()->id);
-                    $user->premium = true;
-                    $user->save();
-                }
-                return view('webpay/token')->with(compact('tokenWs', 'formAction'));
-            } else {
-                return view('webpay/rechazo')->with(compact('output'));
+            if (Session::has('premium') && Session::get('premium')) {
+                $user = User::find(Auth::user()->id);
+                $user->premium = true;
+                $user->save();
             }
 
-            return view('webpay/rechazo')->with(compact('output'));
-        }
-
-    }
-    /**
-     * Finaliza la compra en Webpay
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function finish(Sale $sale)
-    {
-        $result = json_decode($sale->result, true);
-
-        if (isset($result) && $result["detailOutput"]["responseCode"] == 0) {
             return view('webpay/exito')->with(compact('result', 'sale'));
-        } else {
-            return view('webpay/rechazo')->with(compact('result', 'sale'));
         }
+            return view('webpay/rechazo')->with(compact('transaction'));
+
     }
 }

@@ -14,7 +14,8 @@
         :cart='@json(Cart::content())'
         :communes='@json($communes)'
         :discount="{{ $discount }}"
-        init-action="{{ route('sale.init' )}}"
+        webpay-action="{{ route('sale.init' )}}"
+        asset-action="{{ asset("img/1.Webpay_FB_80px.svg")  }}"
         dispatch-action="{{ route('dispatchPrice') }}"
         update-action="{{ route('cart.update') }}"
         coupon-action="{{ route('coupon.store') }}"

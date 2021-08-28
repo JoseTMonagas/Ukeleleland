@@ -1,12 +1,9 @@
 @extends('layouts.app')
 
 @section('pixel-event')
-fbq('track', 'Purchase', {value: {{ $result['detailOutput']['amount'] }}, currency: 'CLP'});
-
-<!-- Event snippet for Página gracias compra conversion page -->
-</script>
 <script>
-    gtag('event', 'conversion', { 'send_to': 'AW-679334487/LaxMCPfJpMkBENek98MC', 'value': {{ $result['detailOutput']['amount'] }}, 'currency': 'CLP', 'transaction_id': '{{ $result['buyOrder'] }}' });
+   // fbq('track', 'Purchase', {value: {{ $result['amount'] }}, currency: 'CLP'});
+   // gtag('event', 'conversion', { 'send_to': 'AW-679334487/LaxMCPfJpMkBENek98MC', 'value': {{ $result['amount'] }}, 'currency': 'CLP', 'transaction_id': '{{ $result['buyOrder'] }}' });
 </script> 
 @endsection
 
@@ -29,7 +26,7 @@ fbq('track', 'Purchase', {value: {{ $result['detailOutput']['amount'] }}, curren
         <tr>
           <th class="text-right">Tipo de Pago:</th>
           <td>
-              @switch($result['detailOutput']['paymentTypeCode'])
+              @switch($result['paymentTypeCode'])
                   @case("VN")
                       Venta Normal
                       @break
@@ -47,17 +44,17 @@ fbq('track', 'Purchase', {value: {{ $result['detailOutput']['amount'] }}, curren
               @endswitch
           </td>
           <th class="text-right">N° de Cuotas:</th>
-          <td>{{ $result['detailOutput']['sharesNumber'] }}</td>
+          <td>{{ $result['installmentsNumber'] }}</td>
           <th class="text-right">Tipo de Cuotas:</th>
           <td>
-            @if($result['detailOutput']['paymentTypeCode'] == "VC")
+            @if($result['paymentTypeCode'] == "VC")
             Cuotas Normales
-            @elseif($result['detailOutput']['paymentTypeCode'] == "SI")
+            @elseif($result['paymentTypeCode'] == "SI")
             3 Cuotas Sin Interes
-            @elseif($result['detailOutput']['paymentTypeCode'] == "S2")
+            @elseif($result['paymentTypeCode'] == "S2")
             2 Cuotas Sin Interes
-            @elseif ($result['detailOutput']['paymentTypeCode'] != 'VN')
-            {{ (explode('C', $result['detailOutput']['paymentTypeCode']))[0] }} Cuotas Sin Interes
+            @elseif ($result['paymentTypeCode'] != 'VN')
+            {{ (explode('C', $result['paymentTypeCode']))[0] }} Cuotas Sin Interes
             @else
             Sin Cuotas
             @endif
@@ -65,9 +62,9 @@ fbq('track', 'Purchase', {value: {{ $result['detailOutput']['amount'] }}, curren
         </tr>
         <tr class="border-bottom">
           <th class="text-right">Codigo de Autorizacion:</th>
-          <td colspan="2">{{ $result['detailOutput']['authorizationCode'] }}</td>
+          <td colspan="2">{{ $result['authorizationCode'] }}</td>
           <th class="text-right">Ultimos 4 Digitos de la Tarjeta:</th>
-          <td colspan="2">{{ $result['cardDetail']['cardNumber'] }}</td>
+          <td colspan="2">{{ $result['cardNumber'] }}</td>
         </tr>
         <tr class="table-primary">
           <th colspan="2">Detalle</th>

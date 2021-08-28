@@ -2,6 +2,10 @@
 
 return [
     'commerce_code' => '597035226141',
+
+    "endpoint_production" => "https://webpay3g.transbank.cl",
+    "endpoint_test" => "https://webpay3gint.transbank.cl/",
+
     'public_cert' => '-----BEGIN CERTIFICATE-----
 MIIDOTCCAiECFBdD3k4S40CFHeL7FthaWwVPIIfbMA0GCSqGSIb3DQEBCwUAMFkx
 CzAJBgNVBAYTAlhYMRUwEwYDVQQHDAxEZWZhdWx0IENpdHkxHDAaBgNVBAoME0Rl

@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col">
+        <div class="col-md-6">
             <h5 class="text-primary border-bottom">Tu compra en Ukeleleland</h5>
             <div v-if="active == 0">
                 <h5 class="text-primary border-bottom">Datos Personales</h5>
@@ -30,7 +30,7 @@
                 <div class="form-group">
                     <label for="email">E-mail:</label>
                     <input type="email" class="form-control" v-model.trim="email" />
-                        <small class="text-muted">Obligatorio</small>
+                    <small class="text-muted">Obligatorio</small>
                 </div>
                 <button type="button" @click="active = 1" class="btn btn-primary">Siguiente</button>
             </div>
@@ -39,7 +39,7 @@
                 <div class="form-group">
                     <label for="comuna">Comuna:</label>
                     <v-select :options="options" v-model="commune" @input="getDispatchPrice"></v-select>
-                        <small class="text-muted">Obligatorio</small>
+                    <small class="text-muted">Obligatorio</small>
                 </div>
                 <div class="form-group">
                     <label for="direccion">Dirección:</label>
@@ -49,7 +49,7 @@
                         v-model.trim="direccion"
                         rows="10">
                     </textarea>
-                        <small class="text-muted">Obligatorio</small>
+                    <small class="text-muted">Obligatorio</small>
                 </div>
                 <button type="button" @click="active = 0" class="btn btn-secondary">Regresar</button>
                 <button type="button" @click="active = 2" class="btn btn-primary">Siguiente</button>
@@ -90,16 +90,40 @@
             </div>
             <div v-if="active == 3">
                 <h5 class="text-primary border-bottom">Escoje tu metodo de pago</h5>
-                <form :action="action" method="POST" accept-charset="utf-8">
-                    <input type="hidden" :value="csrf" name="_token"/>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#wepayModal" @click="webpayDlg">
+                    Pagar por Webpay
+                </button>
 
-                    <button class="btn btn-success">WebPay</button>
-                </form>
-                <button class="btn btn-success" @click="transferenciaDlg">Transferencia</button>
+                <!-- Modal -->
+                <div class="modal fade" id="wepayModal" tabindex="-1" aria-labelledby="wepayModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="wepayModalLabel">Estas a punto de pagar a traves de webpay</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <img :src="assetAction" alt="" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <form method="POST" :action="webpayUrl">
+                                    <input type="hidden" name="token_ws" :value="tokenWS" />
+                                    <button type="submit" class="btn btn-primary" :disabled="isWebpayDisabled">Ir a Pagar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-info" @click="transferenciaDlg">Pagar por transferencia</button>
             </div>
         </div>
 
-        <div class="col">
+        <div class="col-md-4">
             <h5 class="text-primary border-bottom my-3 my-lg-0">Detalle de Compra</h5>
             <table class="table table-sm">
                 <thead>
@@ -138,122 +162,130 @@
     </div>
 </template>
 <script>
-import vSelect from 'vue-select';
+ import vSelect from 'vue-select';
 
-export default {
-    components: {
-'v-select': vSelect
-    },
-    created() {
-        this.products = Object.values(this.cart).map(function(item) {
-            return {
-                rowId: item.rowId,
-                id: item.id,
-                name: item.name,
-                qty: item.qty,
-                price: item.price,
-                subtotal: item.qty * item.price
-            }
-        });
-        this.calcularTotal();
-        if (!(this.profile === null)) {
-            this.active = 2;
-            this.nombre = this.profile.name;
-            this.surname = this.profile.surname;
-            this.rut = '30686957-4';
-            this.telefono = this.profile.phone;
-            this.email = 'test@email.com';
-            this.direccion = this.profile.address;
-            this.commune = this.profile.commune_id;
-        }
-      this.getDispatchPrice();
-    },
-    props: {
-        regions: Array,
-        communes: Array,
-        cart: Object,
-        csrf: String,
-        action: String,
-        updateAction: String,
-        transactionAction: String,
-        home: String,
-        profile: {
-            type: Object,
-            default: null
-        }
-    },
-    data: function() {
-        return {
-            dispatchPrice: null,
-            products: [],
-            active: 0,
-            total: null,
-            nombre: '',
-            apellido: '',
-            rut: '',
-            telefono: '',
-            email: '',
-            direccion: '',
-            commune: null
-        };
-    },
-    computed: {
-        options: function() {
-            return this.communes.map( item => {
-                return {label: item.name, value: item.id};
-            });
-        }
-    },
-    methods: {
-        formatCurrency: function(value) {
-            return '$' + Math.round(parseFloat(value)).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-        },
-        calcularSubtotal(index) {
-            this.products[index].subtotal = this.products[index].qty * this.products[index].price;
-            this.calcularTotal();
-            this.actualizarCantidad(index);
-        },
-        calcularTotal() {
-            let calculo = 0;
-            for (var i = 0, len = this.products.length; i < len; i++) {
-                calculo += this.products[i].subtotal;
-            }
-            this.total = calculo;
-        },
-        getDispatchPrice() {
-            let id = this.commune.value;
-            axios
-                .get("/public/dispatch-price/" + id)
-                .then(response => (response.data.price > 0 ? this.dispatchPrice = response.data.price : Swal.fire('¡Lo sentimos!', 'No hay despachos disponibles para esa comuna :C', 'error')));
-        },
-        actualizarCantidad(index) {
-            let rowId = this.products[index].rowId;
-            let qty = this.products[index].qty;
-            let updateAction = this.updateAction;
-            axios.post(updateAction, {
-                rowId: rowId,
-                qty: qty
-            }).then(function(response) {
-                console.log(response)
-            }).catch(function(error) {
-                console.error(error)
-            });
-        },
-        transferenciaDlg() {
-            let action = this.transactionAction;
-            let data = {
-                name: this.nombre,
-                surname: this.apellido,
-                phone: this.telefono,
-                email: this.email,
-                rut: this.rut,
-                commune: this.commune.label,
-                address: this.direccion
-            };
-            let home = this.home;
-            Swal.fire({
-                title: '<strong>Transferencia</strong>',
-                html: 
+ export default {
+     components: {
+         'v-select': vSelect
+     },
+     created() {
+         this.products = Object.values(this.cart).map(function(item) {
+             return {
+                 rowId: item.rowId,
+                 id: item.id,
+                 name: item.name,
+                 qty: item.qty,
+                 price: item.price,
+                 subtotal: item.qty * item.price
+             }
+         });
+         this.calcularTotal();
+         if (!(this.profile === null)) {
+             this.active = 2;
+             this.nombre = this.profile.name;
+             this.surname = this.profile.surname;
+             this.rut = '';
+             this.telefono = this.profile.phone;
+             this.email = '';
+             this.direccion = this.profile.address;
+             this.commune = this.profile.commune_id;
+         }
+     },
+     props: {
+         regions: Array,
+         communes: Array,
+         cart: Object,
+         csrf: String,
+         assetAction: String,
+         updateAction: String,
+         transactionAction: String,
+         dispatchAction: String,
+         webpayAction: String,
+         home: String,
+         profile: {
+             type: Object,
+             default: null
+         }
+     },
+     data: function() {
+         return {
+             dispatchPrice: null,
+             products: [],
+             active: 0,
+             total: null,
+             nombre: '',
+             apellido: '',
+             rut: '',
+             telefono: '',
+             email: '',
+             direccion: '',
+             commune: null,
+             webpayUrl: "",
+             tokenWS: "",
+             isWebpayDisabled: true,
+         };
+     },
+     computed: {
+         options: function() {
+             return this.communes.map( item => {
+                 return {label: item.name, value: item.id};
+             });
+         }
+     },
+     methods: {
+         formatCurrency: function(value) {
+             return '$' + Math.round(parseFloat(value)).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+         },
+         calcularSubtotal(index) {
+             this.products[index].subtotal = this.products[index].qty * this.products[index].price;
+             this.calcularTotal();
+             this.actualizarCantidad(index);
+         },
+         calcularTotal() {
+             let calculo = 0;
+             for (var i = 0, len = this.products.length; i < len; i++) {
+                 calculo += this.products[i].subtotal;
+             }
+             this.total = calculo;
+         },
+         getDispatchPrice() {
+             const id = this.commune.value;
+             const dispatchRoute = this.dispatchAction
+             if (parseInt(id) > 0) {
+                 axios
+                     .get(`${dispatchRoute}/${id}`)
+                     .then(response => (response.data.price > 0 ? this.dispatchPrice = response.data.price : Swal.fire('¡Lo sentimos!', 'No hay despachos disponibles para esa comuna :C', 'error')));
+             }
+
+         },
+         actualizarCantidad(index) {
+             let rowId = this.products[index].rowId;
+             let qty = this.products[index].qty;
+             let updateAction = this.updateAction;
+             axios.post(updateAction, {
+                 rowId: rowId,
+                 qty: qty
+             }).then(function(response) {
+                 console.log(response)
+             }).catch(function(error) {
+                 console.error(error)
+             });
+         },
+         transferenciaDlg() {
+             let action = this.transactionAction;
+             let data = {
+                 name: this.nombre,
+                 surname: this.apellido,
+                 phone: this.telefono,
+                 email: this.email,
+                 rut: this.rut,
+                 commune: this.commune.label,
+                 address: this.direccion
+             };
+             let home = this.home;
+             Swal.fire({
+                 title: '<strong>Transferencia</strong>',
+                 html:
                 'Realiza una transferencia a la siguiente cuenta, y envia el ' +
                 'comprobante al siguiente correo: <a href="mailto:pagos@ukelelelandbrand.cl">pagos@ukelelelandbrand.cl</a>' +
                 '<table class="table table-sm">' +
@@ -273,39 +305,58 @@ export default {
                 '<th>Banco:</th><td>Banco Estado</td>' +
                 '</tr>' +
                 '</table>',
-                icon: 'info',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Listo',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.value) {
-                    axios
-                        .post(action, {...data})
-                        .then(response => {
-                            if (response.data.status === 'OK') {
-                                Swal.fire(
-                                    '¡Todo Listo!',
-                                    'Tu compra esta siendo procesada',
-                                    'success'
-                                ).then(() => {
-                                    window.location.assign(home);
-                                });
-                            } else {
-                                Swal.fire(
-                                    '¡Ha ocurrido un error!',
-                                    'Hubo un problema procesando tu pedido, intenta de nuevo mas tarde o ponte en contacto con nosotros',
-                                    'error'
-                                ).then(() => {
-                                    window.location.assign(home);
-                                });
-                            }
-                        });
-                }
-            })
-        }
-    }
-};
+                 icon: 'info',
+                 showCancelButton: true,
+                 confirmButtonColor: '#3085d6',
+                 cancelButtonColor: '#d33',
+                 confirmButtonText: 'Listo',
+                 cancelButtonText: 'Cancelar'
+             }).then((result) => {
+                 if (result.value) {
+                     axios
+                         .post(action, {...data})
+                         .then(response => {
+                             if (response.data.status === 'OK') {
+                                 Swal.fire(
+                                     '¡Todo Listo!',
+                                     'Tu compra esta siendo procesada',
+                                     'success'
+                                 ).then(() => {
+                                     window.location.assign(home);
+                                 });
+                             } else {
+                                 Swal.fire(
+                                     '¡Ha ocurrido un error!',
+                                     'Hubo un problema procesando tu pedido, intenta de nuevo mas tarde o ponte en contacto con nosotros',
+                                     'error'
+                                 ).then(() => {
+                                     window.location.assign(home);
+                                 });
+                             }
+                         });
+                 }
+             })
+         },
+         webpayDlg() {
+             const name = this.nombre;
+             const surname = this.apellido;
+             const phone = this.telefono;
+             const email = this.email;
+             const rut = this.rut;
+             const commune = this.commune.label;
+             const address = this.direccion;
+             axios.post(this.webpayAction, {name, surname, phone, email, rut, commune, address}).then((response) => {
+                 if (response.data.status == "OK") {
+                     axios.get(response.data.url).then((response) => {
+                         this.webpayUrl = response.data.url;
+                         this.tokenWS = response.data.token;
+                         this.isWebpayDisabled = false;
+                     })
+                 }
+             })
+
+         }
+     }
+ };
 </script>
 <style></style>
