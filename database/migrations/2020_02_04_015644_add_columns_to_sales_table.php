@@ -17,7 +17,6 @@ class AddColumnsToSalesTable extends Migration
             $table->string('sesion');
             $table->unsignedBigInteger('total');
             $table->unsignedBigInteger('descuento')->default(0);
-            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('estado')->default('EN PROCESO');
             $table->string('tipo_pago');
         });
