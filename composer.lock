@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "46fdaf238ddfa4c9dd9e390ee606be0b",
+    "content-hash": "d99415de9495f935970efe33ae82e577",
     "packages": [
         {
             "name": "arrilot/laravel-widgets",
@@ -1688,6 +1688,52 @@
             "time": "2020-09-06T07:46:29+00:00"
         },
         {
+            "name": "illuminate/macroable",
+            "version": "v8.55.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/macroable.git",
+                "reference": "300aa13c086f25116b5f3cde3ca54ff5c822fb05"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/macroable/zipball/300aa13c086f25116b5f3cde3ca54ff5c822fb05",
+                "reference": "300aa13c086f25116b5f3cde3ca54ff5c822fb05",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Support\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The Illuminate Macroable package.",
+            "homepage": "https://laravel.com",
+            "support": {
+                "issues": "https://github.com/laravel/framework/issues",
+                "source": "https://github.com/laravel/framework"
+            },
+            "time": "2020-10-27T15:20:30+00:00"
+        },
+        {
             "name": "intervention/image",
             "version": "2.6.1",
             "source": {
@@ -2156,6 +2202,62 @@
             "time": "2021-08-10T14:25:21+00:00"
         },
         {
+            "name": "laravel/legacy-factories",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/legacy-factories.git",
+                "reference": "5e3fe2fd5fda64e20ea5c74c831a7346294e902a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/legacy-factories/zipball/5e3fe2fd5fda64e20ea5c74c831a7346294e902a",
+                "reference": "5e3fe2fd5fda64e20ea5c74c831a7346294e902a",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/macroable": "^8.0",
+                "php": "^7.3|^8.0",
+                "symfony/finder": "^3.4|^4.0|^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Illuminate\\Database\\Eloquent\\LegacyFactoryServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "helpers.php"
+                ],
+                "psr-4": {
+                    "Illuminate\\Database\\Eloquent\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The legacy version of the Laravel Eloquent factories.",
+            "homepage": "http://laravel.com",
+            "support": {
+                "issues": "https://github.com/laravel/framework/issues",
+                "source": "https://github.com/laravel/framework"
+            },
+            "time": "2020-10-27T14:25:32+00:00"
+        },
+        {
             "name": "laravel/tinker",
             "version": "v1.0.10",
             "source": {
@@ -2472,6 +2574,74 @@
             "time": "2021-08-17T13:49:42+00:00"
         },
         {
+            "name": "league/fractal",
+            "version": "0.19.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/fractal.git",
+                "reference": "06dc15f6ba38f2dde2f919d3095d13b571190a7c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/fractal/zipball/06dc15f6ba38f2dde2f919d3095d13b571190a7c",
+                "reference": "06dc15f6ba38f2dde2f919d3095d13b571190a7c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "doctrine/orm": "^2.5",
+                "illuminate/contracts": "~5.0",
+                "mockery/mockery": "~0.9",
+                "pagerfanta/pagerfanta": "~1.0.0",
+                "phpunit/phpunit": "^4.8.35 || ^7.5",
+                "squizlabs/php_codesniffer": "~1.5|~2.0|~3.4",
+                "zendframework/zend-paginator": "~2.3"
+            },
+            "suggest": {
+                "illuminate/pagination": "The Illuminate Pagination component.",
+                "pagerfanta/pagerfanta": "Pagerfanta Paginator",
+                "zendframework/zend-paginator": "Zend Framework Paginator"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.13-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Fractal\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Phil Sturgeon",
+                    "email": "me@philsturgeon.uk",
+                    "homepage": "http://philsturgeon.uk/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Handle the output of complex data structures ready for API output.",
+            "homepage": "http://fractal.thephpleague.com/",
+            "keywords": [
+                "api",
+                "json",
+                "league",
+                "rest"
+            ],
+            "support": {
+                "issues": "https://github.com/thephpleague/fractal/issues",
+                "source": "https://github.com/thephpleague/fractal/tree/0.19.2"
+            },
+            "time": "2020-01-24T23:17:29+00:00"
+        },
+        {
             "name": "league/mime-type-detection",
             "version": "1.7.0",
             "source": {
@@ -2624,17 +2794,88 @@
             "time": "2021-07-23T07:42:52+00:00"
         },
         {
-            "name": "nesbot/carbon",
-            "version": "2.51.1",
+            "name": "musonza/chat",
+            "version": "v4.6.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "8619c299d1e0d4b344e1f98ca07a1ce2cfbf1922"
+                "url": "https://github.com/musonza/chat.git",
+                "reference": "450eb344785a335810030f238c337c6427001054"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/8619c299d1e0d4b344e1f98ca07a1ce2cfbf1922",
-                "reference": "8619c299d1e0d4b344e1f98ca07a1ce2cfbf1922",
+                "url": "https://api.github.com/repos/musonza/chat/zipball/450eb344785a335810030f238c337c6427001054",
+                "reference": "450eb344785a335810030f238c337c6427001054",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^6.0|^7.0|^8.0",
+                "laravel/legacy-factories": "^1.0",
+                "php": ">=7.3",
+                "spatie/laravel-fractal": "^5.8"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0.0",
+                "orchestra/testbench": "^4.0|^6.0",
+                "phpunit/phpunit": "^8.0|^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Musonza\\Chat\\ChatServiceProvider"
+                    ],
+                    "aliases": {
+                        "Chat": "Musonza\\Chat\\Facades\\ChatFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Musonza\\Chat\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tinashe Musonza",
+                    "email": "tashtin263@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Chat Package for Laravel",
+            "keywords": [
+                "chat",
+                "conversation",
+                "laravel",
+                "messaging"
+            ],
+            "support": {
+                "issues": "https://github.com/musonza/chat/issues",
+                "source": "https://github.com/musonza/chat/tree/v4.6.0"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/tinashemusonza",
+                    "type": "custom"
+                }
+            ],
+            "time": "2021-05-12T15:45:03+00:00"
+        },
+        {
+            "name": "nesbot/carbon",
+            "version": "2.52.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/briannesbitt/Carbon.git",
+                "reference": "369c0e2737c56a0f39c946dd261855255a6fccbe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/369c0e2737c56a0f39c946dd261855255a6fccbe",
+                "reference": "369c0e2737c56a0f39c946dd261855255a6fccbe",
                 "shasum": ""
             },
             "require": {
@@ -2715,7 +2956,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-28T13:16:28+00:00"
+            "time": "2021-08-14T19:10:52+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -3879,16 +4120,16 @@
         },
         {
             "name": "seld/phar-utils",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/phar-utils.git",
-                "reference": "8674b1d84ffb47cc59a101f5d5a3b61e87d23796"
+                "reference": "749042a2315705d2dfbbc59234dd9ceb22bf3ff0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/phar-utils/zipball/8674b1d84ffb47cc59a101f5d5a3b61e87d23796",
-                "reference": "8674b1d84ffb47cc59a101f5d5a3b61e87d23796",
+                "url": "https://api.github.com/repos/Seldaek/phar-utils/zipball/749042a2315705d2dfbbc59234dd9ceb22bf3ff0",
+                "reference": "749042a2315705d2dfbbc59234dd9ceb22bf3ff0",
                 "shasum": ""
             },
             "require": {
@@ -3921,9 +4162,148 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/phar-utils/issues",
-                "source": "https://github.com/Seldaek/phar-utils/tree/master"
+                "source": "https://github.com/Seldaek/phar-utils/tree/1.1.2"
             },
-            "time": "2020-07-07T18:42:57+00:00"
+            "time": "2021-08-19T21:01:38+00:00"
+        },
+        {
+            "name": "spatie/fractalistic",
+            "version": "2.9.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/fractalistic.git",
+                "reference": "c4fc2b223a8f7321ece449abc2c59cc5baf470fd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/fractalistic/zipball/c4fc2b223a8f7321ece449abc2c59cc5baf470fd",
+                "reference": "c4fc2b223a8f7321ece449abc2c59cc5baf470fd",
+                "shasum": ""
+            },
+            "require": {
+                "league/fractal": "^0.19.0",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "illuminate/pagination": "~5.3.0|~5.4.0",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Fractalistic\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A developer friendly wrapper around Fractal",
+            "homepage": "https://github.com/spatie/fractalistic",
+            "keywords": [
+                "api",
+                "fractal",
+                "fractalistic",
+                "spatie",
+                "transform"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/fractalistic/issues",
+                "source": "https://github.com/spatie/fractalistic/tree/2.9.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-11-12T18:19:10+00:00"
+        },
+        {
+            "name": "spatie/laravel-fractal",
+            "version": "5.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-fractal.git",
+                "reference": "335a8d0e9e966244a552c6970ac690b18c402d90"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-fractal/zipball/335a8d0e9e966244a552c6970ac690b18c402d90",
+                "reference": "335a8d0e9e966244a552c6970ac690b18c402d90",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "~5.8.0|^6.0|^7.0|^8.0",
+                "illuminate/support": "~5.8.0|^6.0|^7.0|^8.0",
+                "php": "^7.2",
+                "spatie/fractalistic": "^2.5"
+            },
+            "require-dev": {
+                "dms/phpunit-arraysubset-asserts": "^0.1.0",
+                "orchestra/testbench": "~3.8.0|^4.0|^5.0|^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Fractal\\FractalServiceProvider"
+                    ],
+                    "aliases": {
+                        "Fractal": "Spatie\\Fractal\\FractalFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Fractal\\": "src"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "An easy to use Fractal integration for Laravel applications",
+            "homepage": "https://github.com/spatie/laravel-fractal",
+            "keywords": [
+                "api",
+                "fractal",
+                "laravel",
+                "laravel-fractal",
+                "lumen",
+                "spatie",
+                "transform"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-fractal/issues",
+                "source": "https://github.com/spatie/laravel-fractal/tree/5.8.0"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-09-08T20:28:01+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -6265,100 +6645,35 @@
         },
         {
             "name": "transbank/transbank-sdk",
-            "version": "1.6.0",
+            "version": "2.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TransbankDevelopers/transbank-sdk-php.git",
-                "reference": "d68ebb592505bf9edc7b57592e8fcfc634cd3168"
+                "reference": "17e824a0079c6b296383abc3b7d1e681b77a5ec5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TransbankDevelopers/transbank-sdk-php/zipball/d68ebb592505bf9edc7b57592e8fcfc634cd3168",
-                "reference": "d68ebb592505bf9edc7b57592e8fcfc634cd3168",
+                "url": "https://api.github.com/repos/TransbankDevelopers/transbank-sdk-php/zipball/17e824a0079c6b296383abc3b7d1e681b77a5ec5",
+                "reference": "17e824a0079c6b296383abc3b7d1e681b77a5ec5",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
                 "ext-json": "*",
                 "ext-mbstring": "*",
-                "guzzlehttp/guzzle": "^6.3.3",
-                "php": ">=5.6.0"
+                "guzzlehttp/guzzle": "^5|^6|^7",
+                "php": ">=7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0",
-                "satooshi/php-coveralls": "~0.6.1",
+                "dms/phpunit-arraysubset-asserts": "^0.2.1",
+                "phpunit/phpunit": "^9",
                 "squizlabs/php_codesniffer": "~2.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "Transbank\\": [
-                        "lib/"
-                    ],
-                    "Transbank\\Onepay\\": [
-                        "lib/onepay",
-                        "lib/onepay/utils"
-                    ],
-                    "Transbank\\Onepay\\Exceptions\\": [
-                        "lib/onepay/exceptions"
-                    ],
-                    "Transbank\\Webpay\\": [
-                        "lib/webpay",
-                        "lib/webpay/soap",
-                        "lib/webpay_rest",
-                        "lib/webpay_rest/webpay_plus"
-                    ],
-                    "Transbank\\Webpay\\Exceptions\\": [
-                        "lib/webpay_rest/exceptions"
-                    ],
-                    "Transbank\\Webpay\\WebpayPlus\\": [
-                        "lib/webpay_rest/webpay_plus"
-                    ],
-                    "Transbank\\Webpay\\WebpayPlus\\Exceptions\\": [
-                        "lib/webpay_rest/webpay_plus/exceptions"
-                    ],
-                    "Transbank\\Webpay\\Oneclick\\": [
-                        "lib/webpay_rest/oneclick",
-                        "lib/webpay_rest/oneclick/inscription",
-                        "lib/webpay_rest/oneclick/mall"
-                    ],
-                    "Transbank\\Webpay\\Oneclick\\Exceptions\\": [
-                        "lib/webpay_rest/oneclick/exceptions",
-                        "lib/webpay_rest/oneclick/mall/exceptions"
-                    ],
-                    "Transbank\\Patpass\\": [
-                        "lib/patpass",
-                        "lib/patpass/patpass_by_webpay"
-                    ],
-                    "Transbank\\Patpass\\Exceptions\\": [
-                        "lib/patpass/exceptions"
-                    ],
-                    "Transbank\\Patpass\\PatpassByWebpay\\": [
-                        "lib/patpass/patpass_by_webpay"
-                    ],
-                    "Transbank\\Patpass\\PatpassComercio\\": [
-                        "lib/patpass/patpass_comercio",
-                        "lib/patpass/patpass_comercio/inscription"
-                    ],
-                    "Transbank\\Patpass\\PatpassComercio\\Exceptions\\": [
-                        "lib/patpass/patpass_comercio/exceptions"
-                    ],
-                    "Transbank\\Patpass\\PatpassByWebpay\\Exceptions\\": [
-                        "lib/patpass/patpass_by_webpay/exceptions"
-                    ],
-                    "Transbank\\TransaccionCompleta\\": [
-                        "lib/transaccion_completa",
-                        "lib/transaccion_completa/inscription",
-                        "lib/transaccion_completa/transaction",
-                        "lib/transaccion_completa/mall",
-                        "lib/transaccion_completa/mall/transaction"
-                    ],
-                    "Transbank\\TransaccionCompleta\\Exceptions\\": [
-                        "lib/transaccion_completa/exceptions",
-                        "lib/transaccion_completa/mall/exceptions"
-                    ],
-                    "Transbank\\Utils\\": [
-                        "lib/utils"
+                        "src/"
                     ]
                 }
             },
@@ -6375,9 +6690,9 @@
             ],
             "support": {
                 "issues": "https://github.com/TransbankDevelopers/transbank-sdk-php/issues",
-                "source": "https://github.com/TransbankDevelopers/transbank-sdk-php/tree/1.6.0"
+                "source": "https://github.com/TransbankDevelopers/transbank-sdk-php/tree/2.0.6"
             },
-            "time": "2019-12-30T12:49:17+00:00"
+            "time": "2021-07-12T21:51:21+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

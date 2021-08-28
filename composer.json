@@ -15,9 +15,10 @@
         "hardevine/shoppingcart": "^2.7",
         "laravel/framework": "6.*",
         "laravel/tinker": "^1.0",
+        "musonza/chat": "^4.6",
         "pusher/pusher-php-server": "^4.1",
         "tcg/voyager": "^1.2",
-        "transbank/transbank-sdk": "^1.6"
+        "transbank/transbank-sdk": "~2.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
