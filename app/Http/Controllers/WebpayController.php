@@ -71,7 +71,7 @@ class WebpayController extends Controller
     {
 
         if (!$request->has('token_ws')) {
-            return 'Error. No token recibido';
+            return view('webpay/rechazo');
         }
 
         if (env('APP_ENV') != "local") {

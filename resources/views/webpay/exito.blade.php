@@ -109,7 +109,7 @@
                 <div class="col-md-4 offset-md-8 d-flex flex-column">
                     <span>
                         <b>Total:</b>
-                        {{ number_format(\Cart::total()) }} CLP
+                        {{ number_format($result["amount"]) }} CLP
                     </span>
                 </div>
             </div>

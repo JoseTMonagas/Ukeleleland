@@ -89,7 +89,7 @@ Route::get('/dispatch-price/{commune?}', 'getDispatchPriceController')->name('di
 
 Route::group(['prefix' => 'webpay'], function () {
     Route::get('init/{sale}', 'WebpayController@init')->name('webpay.init');
-    Route::get('voucher/{sale}', 'WebpayController@voucher')->name('webpay.voucher');
+    Route::match(["get", "post"], 'voucher/{sale}', 'WebpayController@voucher')->name('webpay.voucher');
 });
 
 Route::group(['prefix' => 'blog'], function () {
