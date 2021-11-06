@@ -38,12 +38,12 @@ class WebpayController extends Controller
 
         if (!Arr::has($transactionData, null)) {
             $transaction = (new Transaction)
-                         ->create(
-                             $transactionData["buyOrder"],
-                             $transactionData["sessionId"],
-                             $transactionData["monto"],
-                             $transactionData["returnUrl"]
-                         );
+                ->create(
+                    $transactionData["buyOrder"],
+                    $transactionData["sessionId"],
+                    $transactionData["monto"],
+                    $transactionData["returnUrl"]
+                );
 
             $context = [
                 "status" => "OK",
@@ -59,7 +59,6 @@ class WebpayController extends Controller
         ];
 
         return response()->json($context);
-
     }
 
     /**
@@ -102,7 +101,7 @@ class WebpayController extends Controller
             $orden->save();
 
             $orden->actualizarStock();
-            $orden->createTransaction();
+            $orden->sendCreated();
 
             if (Session::has('premium') && Session::get('premium')) {
                 $user = User::find(Auth::user()->id);
@@ -112,7 +111,6 @@ class WebpayController extends Controller
 
             return view('webpay/exito')->with(compact('result', 'sale'));
         }
-            return view('webpay/rechazo')->with(compact('transaction'));
-
+        return view('webpay/rechazo')->with(compact('transaction'));
     }
 }
