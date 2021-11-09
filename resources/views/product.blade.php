@@ -36,23 +36,14 @@
         <!-- Product tabs -->
         <ul class="nav nav-pills d-flex flex-column flex-lg-row" id="myTab" role="tablist">
           <li class="nav-item">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Descripcion</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Detalles</a>
+            <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Detalles</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Descargas Gratuitas</a>
           </li>
         </ul>
         <div class="tab-content pt-3 px-3 border border-light shadow" id="myTabContent">
-          <div style="height:250px;" class="tab-pane fade show active overflow-auto" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <h4 class="text-primary border-bottom">Descripcion</h4>
-            <p class="text-justify">
-              {!! $product->description !!}
-            </p>
-          </div>
-          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+          <div class="tab-pane fade show active overflow-auto" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <h4 class="text-primary border-bottom">Detalles</h4>
             <p class="text-justify">
               {!! $product->details !!}
