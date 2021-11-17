@@ -75,7 +75,7 @@ src="https://www.facebook.com/tr?id=2511947448913671&ev=PageView
           <div class="col-md bg-secondary text-light text-center">
               <i class="fas fa-clock"></i>
               <a class="text-light" href="https://ukelelelandbrand.cl/formas-envio">
-                  Conoce las formas de envío a Santiago y regiones haciendo click aquí
+                  Envío gratis para Santiago y en regiones desde $5.000, info aquí
               </a>
           </div>
       </section>
